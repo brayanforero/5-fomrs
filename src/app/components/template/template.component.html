@@ -1,0 +1,89 @@
+<h1>Forms Template</h1>
+<hr />
+<div class="card w-50 p-3">
+  <form action="" autocomplete="off" #forma="ngForm" (submit)="sendData(forma)">
+    <div class="group mb-3">
+      <label for="name">Nombre:</label>
+      <input
+        #nameModel="ngModel"
+        [ngModel]="person.name"
+        [class.is-invalid]="nameModel.invalid && nameModel.touched"
+        type="text"
+        id="name"
+        name="name"
+        class="form-control mb-3"
+        minlength="3"
+        maxlength="20"
+        required
+      />
+      <small *ngIf="nameModel.invalid && nameModel.touched" class="text-danger">
+        El nombre es requerido y debe tener un mínimo de 3 carácteres
+      </small>
+    </div>
+    <div class="group mb-3">
+      <label for="lastname">Apellido:</label>
+      <input
+        #lastnameModel="ngModel"
+        [ngModel]="person.lastname"
+        [class.is-invalid]="lastnameModel.invalid && lastnameModel.touched"
+        type="text"
+        id="lastname"
+        name="lastname"
+        class="form-control mb-3"
+        required
+        minlength="3"
+        maxlength="20"
+      />
+      <small
+        *ngIf="lastnameModel.invalid && lastnameModel.touched"
+        class="text-danger"
+      >
+        El apellido es requerido y debe tener un mínimo de 3 carácteres
+      </small>
+    </div>
+    <div class="group mb-3">
+      <label for="email">Email:</label>
+      <input
+        #emailModel="ngModel"
+        [ngModel]="person.email"
+        [class.is-invalid]="emailModel.invalid && emailModel.touched"
+        type="email"
+        id="email"
+        name="email"
+        class="form-control mb-3"
+        required
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$"
+      />
+      <small
+        *ngIf="emailModel.invalid && emailModel.touched"
+        class="text-danger"
+      >
+        Ingrese un email válido
+      </small>
+    </div>
+    <div class="group mb-4">
+      <label for="country">País</label>
+      <select
+        #countryModel="ngModel"
+        [class.is-invalid]="countryModel.invalid && countryModel.touched"
+        [disabled]="countries.length === 0"
+        [ngModel]="person.country"
+        name="country"
+        id="country"
+        class="form-control"
+        required
+      >
+        <option *ngFor="let c of countries" [value]="c.code">
+          {{ c.name }}
+        </option>
+      </select>
+      <small
+        *ngIf="countryModel.invalid && countryModel.touched"
+        class="text-danger"
+      >
+        Selecciones un país
+      </small>
+    </div>
+    <button type="submit" class="btn btn-outline-primary w-100">Enviar</button>
+  </form>
+</div>
