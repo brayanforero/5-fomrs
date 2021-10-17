@@ -45,7 +45,6 @@
           id="email"
           placeholder="correo@test.com"
           formControlName="email"
-          formControlName="email"
           [class.is-invalid]="invalidEmail"
         />
         <small *ngIf="invalidEmail" class="d-block w-100 text-danger">
@@ -69,6 +68,45 @@
             [class.is-invalid]="invalidStreet"
           />
         </div>
+      </div>
+
+      <div class="div">
+        <table class="table table-sm">
+          <thead class="bg-dark text-light">
+            <tr>
+              <th>ID</th>
+              <th>Pasatiempos</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody formArrayName="pasatiempos">
+            <tr *ngFor="let p of pasatiempos.controls; let i = index">
+              <th>{{ i + 1 }}</th>
+              <th>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Escribe algo"
+                  [formControlName]="i"
+                />
+              </th>
+              <th>
+                <button
+                  type="button"
+                  (click)="deleteControl(i)"
+                  class="btn btn-danger"
+                >
+                  Elimininar
+                </button>
+              </th>
+            </tr>
+          </tbody>
+          <tfoot>
+            <button (click)="add()" type="button" class="btn btn-info">
+              Agregar
+            </button>
+          </tfoot>
+        </table>
       </div>
       <div class="mb-4 d-flex align-items-center">
         <button class="btn btn-primary w-100" type="submit">Enviar</button>

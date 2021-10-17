@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidationsService } from 'src/app/services/validations.service';
 
 @Component({
   selector: 'app-reactive',
@@ -7,10 +8,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styles: [],
 })
 export class ReactiveComponent implements OnInit {
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private validService: ValidationsService
+  ) {
     this.forma.reset({
-      name: 'brayan',
-      lastname: 'forero',
+      name: '',
+      lastname: '',
+      email: 'test@gmail.com',
       address: {
         district: 'Colón',
         street: 'street #1',
@@ -25,7 +30,12 @@ export class ReactiveComponent implements OnInit {
     ],
     lastname: [
       '',
-      [Validators.required, Validators.minLength(3), Validators.maxLength(20)],
+      [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(20),
+        this.validService.notHerrera,
+      ],
     ],
     email: [
       '',
@@ -38,6 +48,7 @@ export class ReactiveComponent implements OnInit {
       district: ['Colón', [Validators.required, Validators.minLength(5)]],
       street: ['street #1-25', Validators.required],
     }),
+    pasatiempos: this.fb.array([]),
   });
   ngOnInit(): void {}
 
@@ -48,6 +59,7 @@ export class ReactiveComponent implements OnInit {
       );
 
     console.log(this.forma);
+    this.forma.reset();
   }
 
   get invalidName() {
@@ -76,5 +88,17 @@ export class ReactiveComponent implements OnInit {
       this.forma.get('address.street')?.invalid &&
       this.forma.get('address.street')?.touched
     );
+  }
+
+  get pasatiempos() {
+    return this.forma.get('pasatiempos') as FormArray;
+  }
+
+  deleteControl(i: number) {
+    this.pasatiempos.removeAt(i);
+  }
+
+  add() {
+    this.pasatiempos.push(this.fb.control(['']));
   }
 }
