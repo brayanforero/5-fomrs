@@ -1,0 +1,89 @@
+<h1>Formularios Reactivos</h1>
+<hr />
+
+<div class="row">
+  <div class="col-7">
+    <form
+      class="card p-4"
+      autocomplete="off"
+      [formGroup]="forma"
+      (ngSubmit)="submit()"
+    >
+      <div class="mb-4 d-flex align-items-center">
+        <label class="w-25" for="name">Nombre:</label>
+        <input
+          class="w-75 form-control"
+          type="text"
+          id="name"
+          placeholder="Nombre"
+          formControlName="name"
+          [class.is-invalid]="invalidName"
+        />
+        <small *ngIf="invalidName" class="d-block w-100 text-danger">
+          Ingresa tu nombre, debe tener como mínimo 3 carácteres y máximo 20
+        </small>
+      </div>
+      <div class="mb-4 d-flex align-items-center">
+        <label class="w-25" for="lastname">Apellidos:</label>
+        <input
+          class="w-75 form-control"
+          type="text"
+          id="lastname"
+          placeholder="Apellido"
+          formControlName="lastname"
+          [class.is-invalid]="invalidLastName"
+        />
+        <small *ngIf="invalidLastName" class="d-block w-100 text-danger">
+          Ingresa tu apellido, debe tener como mínimo 3 carácteres y máximo 20
+        </small>
+      </div>
+      <div class="mb-4 d-flex align-items-center">
+        <label class="w-25" for="email">Email:</label>
+        <input
+          class="w-75 form-control"
+          type="email"
+          id="email"
+          placeholder="correo@test.com"
+          formControlName="email"
+          formControlName="email"
+          [class.is-invalid]="invalidEmail"
+        />
+        <small *ngIf="invalidEmail" class="d-block w-100 text-danger">
+          Ingresa email válido
+        </small>
+      </div>
+
+      <div class="mb-4 d-flex align-items-center" formGroupName="address">
+        <label class="w-25" for="">Dirección:</label>
+        <div class="d-flex w-75">
+          <input
+            class="form-control w-50"
+            type="text"
+            formControlName="district"
+            [class.is-invalid]="invalidDistrict"
+          />
+          <input
+            class="form-control w-50"
+            type="text"
+            formControlName="street"
+            [class.is-invalid]="invalidStreet"
+          />
+        </div>
+      </div>
+      <div class="mb-4 d-flex align-items-center">
+        <button class="btn btn-primary w-100" type="submit">Enviar</button>
+      </div>
+    </form>
+  </div>
+  <div class="col-5">
+    <pre>
+      Form Valid | {{forma.valid}}
+      <br>
+      Form Status | {{forma.status}}
+    </pre>
+    <hr />
+    <pre>
+      Values | {{ forma.value | json }}
+    </pre>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-reactive',
@@ -6,7 +7,74 @@ import { Component, OnInit } from '@angular/core';
   styles: [],
 })
 export class ReactiveComponent implements OnInit {
-  constructor() {}
+  constructor(private fb: FormBuilder) {
+    this.forma.reset({
+      name: 'brayan',
+      lastname: 'forero',
+      address: {
+        district: 'Colón',
+        street: 'street #1',
+      },
+    });
+  }
 
+  forma: FormGroup = this.fb.group({
+    name: [
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(20)],
+    ],
+    lastname: [
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(20)],
+    ],
+    email: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern('[a-z0-9._%+-]+@[a-z]+\\.[a-z]{2,3}$'),
+      ],
+    ],
+    address: this.fb.group({
+      district: ['Colón', [Validators.required, Validators.minLength(5)]],
+      street: ['street #1-25', Validators.required],
+    }),
+  });
   ngOnInit(): void {}
+
+  submit() {
+    if (this.forma.invalid)
+      return Object.values(this.forma.controls).forEach((c) =>
+        c.markAsTouched()
+      );
+
+    console.log(this.forma);
+  }
+
+  get invalidName() {
+    return this.forma.get('name')?.invalid && this.forma.get('name')?.touched;
+  }
+
+  get invalidLastName() {
+    return (
+      this.forma.get('lastname')?.invalid && this.forma.get('lastname')?.touched
+    );
+  }
+
+  get invalidEmail() {
+    return this.forma.get('email')?.invalid && this.forma.get('email')?.touched;
+  }
+
+  get invalidDistrict() {
+    return (
+      this.forma.get('address.district')?.invalid &&
+      this.forma.get('address.district')?.touched
+    );
+  }
+
+  get invalidStreet() {
+    return (
+      this.forma.get('address.street')?.invalid &&
+      this.forma.get('address.street')?.touched
+    );
+  }
 }
