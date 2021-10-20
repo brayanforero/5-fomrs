@@ -9,6 +9,7 @@
       [formGroup]="forma"
       (ngSubmit)="submit()"
     >
+      <!-- NAME -->
       <div class="mb-4 d-flex align-items-center">
         <label class="w-25" for="name">Nombre:</label>
         <input
@@ -23,6 +24,7 @@
           Ingresa tu nombre, debe tener como mínimo 3 carácteres y máximo 20
         </small>
       </div>
+      <!-- LASTNAME -->
       <div class="mb-4 d-flex align-items-center">
         <label class="w-25" for="lastname">Apellidos:</label>
         <input
@@ -37,6 +39,7 @@
           Ingresa tu apellido, debe tener como mínimo 3 carácteres y máximo 20
         </small>
       </div>
+      <!-- EMAIL -->
       <div class="mb-4 d-flex align-items-center">
         <label class="w-25" for="email">Email:</label>
         <input
@@ -49,6 +52,21 @@
         />
         <small *ngIf="invalidEmail" class="d-block w-100 text-danger">
           Ingresa email válido
+        </small>
+      </div>
+      <!-- USERNAME -->
+      <div class="mb-4 d-flex align-items-center">
+        <label class="w-25" for="username">Username:</label>
+        <input
+          class="w-75 form-control"
+          type="text"
+          id="username"
+          placeholder="Pepito 99"
+          formControlName="username"
+          [class.is-invalid]="invalidUserName"
+        />
+        <small *ngIf="invalidUserName" class="d-block w-100 text-danger">
+          Nombre de usuario ya ha sido tomado
         </small>
       </div>
 

@@ -44,6 +44,11 @@ export class ReactiveComponent implements OnInit {
         Validators.pattern('[a-z0-9._%+-]+@[a-z]+\\.[a-z]{2,3}$'),
       ],
     ],
+    username: [
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(20)],
+      [this.validService.existsUsername],
+    ],
     address: this.fb.group({
       district: ['Colón', [Validators.required, Validators.minLength(5)]],
       street: ['street #1-25', Validators.required],
@@ -74,6 +79,12 @@ export class ReactiveComponent implements OnInit {
 
   get invalidEmail() {
     return this.forma.get('email')?.invalid && this.forma.get('email')?.touched;
+  }
+
+  get invalidUserName() {
+    return (
+      this.forma.get('username')?.invalid && this.forma.get('username')?.touched
+    );
   }
 
   get invalidDistrict() {
